@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context=".ui.cocktails.CocktailsFragment">
+
+    <ImageView
+        android:id="@+id/placeholder_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:src="@drawable/summer_holidays" />
+
+    <TextView
+        android:id="@+id/cocktails_title_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="24dp"
+        android:fontFamily="@font/didact_gothic_regular"
+        android:gravity="center"
+        android:text="@string/cocktails_title"
+        android:textColor="@color/main_text_color"
+        android:textSize="47sp" />
+
+    <TextView
+        android:id="@+id/placeholder_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:lines="2"
+        android:textSize="18sp"
+        android:text="@string/placeholder_cocktails_fragment"
+        android:textColor="#FF79747E" />
+
+    <ImageView
+        android:id="@+id/placeholder_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="40dp"
+        android:background="@drawable/arrow_bottom" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cocktails_list_RV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/cocktail_item" />
+
+</LinearLayout>

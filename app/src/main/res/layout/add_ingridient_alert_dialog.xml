@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/add_ingredient_background"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/didact_gothic_regular"
+        android:gravity="center"
+        android:text="@string/add_ingredient"
+        android:textColor="#FF313131"
+        android:textSize="32sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:hint="@string/ingredients_name"
+        app:boxCornerRadiusBottomEnd="56dp"
+        app:boxCornerRadiusBottomStart="56dp"
+        app:boxCornerRadiusTopEnd="56dp"
+        app:boxCornerRadiusTopStart="56dp"
+        app:boxStrokeColor="#FFD0C4C4"
+        app:helperText="Add title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ingredient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addIngredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/blue_button_background"
+        android:fontFamily="@font/didact_gothic_regular"
+        android:minHeight="56dp"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:cornerRadius="80dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancelAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/transparent_button_background"
+        android:fontFamily="@font/didact_gothic_regular"
+        android:minHeight="56dp"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/button_add_background"
+        android:textSize="24sp"
+        app:cornerRadius="80dp" />
+</LinearLayout>

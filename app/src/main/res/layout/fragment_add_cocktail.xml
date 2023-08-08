@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical"
+        tools:context=".ui.add_cocktail.AddCocktailFragment">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="72dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/camera_background">
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/camera_background"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/camera_icon" />
+        </FrameLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleFrame"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:hint="@string/title"
+            app:boxCornerRadiusBottomEnd="56dp"
+            app:boxCornerRadiusBottomStart="56dp"
+            app:boxCornerRadiusTopEnd="56dp"
+            app:boxCornerRadiusTopStart="56dp"
+            app:boxStrokeColor="#FFD0C4C4"
+            app:helperText="Add title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:hint="@string/description"
+            app:boxCornerRadiusBottomEnd="34dp"
+            app:boxCornerRadiusBottomStart="34dp"
+            app:boxCornerRadiusTopEnd="34dp"
+            app:boxCornerRadiusTopStart="34dp"
+            app:boxStrokeColor="#FFD0C4C4"
+            app:helperText="Optional field">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:minHeight="154dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:hint="@string/recipe"
+            app:boxCornerRadiusBottomEnd="34dp"
+            app:boxCornerRadiusBottomStart="34dp"
+            app:boxCornerRadiusTopEnd="34dp"
+            app:boxCornerRadiusTopStart="34dp"
+            app:boxStrokeColor="#FFD0C4C4"
+            app:helperText="Optional field">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:minHeight="154dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            app:chipSpacing="8dp"
+            app:singleSelection="false">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/addChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/white"
+                app:chipIcon="@drawable/plus_chip" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addSaveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:background="@drawable/blue_button_background"
+            android:fontFamily="@font/didact_gothic_regular"
+            android:minHeight="56dp"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:cornerRadius="80dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addCancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:background="@drawable/transparent_button_background"
+            android:fontFamily="@font/didact_gothic_regular"
+            android:minHeight="56dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/button_add_background"
+            android:textSize="24sp"
+            app:cornerRadius="80dp" />
+    </LinearLayout>
+</ScrollView>
