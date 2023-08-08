@@ -16,11 +16,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         initView()
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.cocktailsFragment) {
+                binding.floatingActionButton.visibility = View.VISIBLE
+            }else{
+                binding.floatingActionButton.visibility = View.GONE
+            }
+        }
     }
 
     private fun initView() {
@@ -28,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             floatingActionButton.setOnClickListener {
                 navController.navigate(R.id.addCocktailFragment)
-                binding.floatingActionButton.visibility = View.GONE
+
             }
         }
     }

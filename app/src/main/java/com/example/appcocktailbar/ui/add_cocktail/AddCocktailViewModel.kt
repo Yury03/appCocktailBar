@@ -25,4 +25,5 @@ class AddCocktailViewModel(
         viewModelScope.launch(Dispatchers.IO) { editCocktail.invoke(model) }
 
     fun saveNewIngredient(name: String) = _newIngredientName.postValue(name)
+
 }
