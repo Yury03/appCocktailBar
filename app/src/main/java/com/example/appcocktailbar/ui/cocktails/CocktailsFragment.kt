@@ -29,7 +29,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initView()
+        initView()
 
     }
 
@@ -38,14 +38,17 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
             Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
         }
         viewModel.cocktailsList.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) binding.cocktailsListRV.adapter =
-                CocktailsListAdapter(it, showDetails)
-            with(binding) {
-                placeholderArrow.visibility = View.GONE
-                placeholderHint.visibility = View.GONE
-                placeholderPhoto.visibility = View.GONE
-                cocktailsListRV.visibility = View.VISIBLE
+            if (it.isNotEmpty()) {
+                with(binding) {
+                    cocktailsListRV.adapter = CocktailsListAdapter(it, showDetails)
+                    placeholderArrow.visibility = View.GONE
+                    placeholderHint.visibility = View.GONE
+                    placeholderPhoto.visibility = View.GONE
+                    cocktailsListRV.visibility = View.VISIBLE
+                }
+
             }
+
         }
     }
 

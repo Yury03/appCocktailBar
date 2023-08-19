@@ -37,14 +37,12 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
 
         binding.addSaveButton.setOnClickListener {
             if (isValid()) {
-
                 viewModel.addCocktail(createModel())
+                findNavController().navigate(R.id.cocktailsFragment)
             }
         }
         binding.addCancelButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.cocktailsFragment,
-            )
+            findNavController().navigate(R.id.cocktailsFragment)
         }
         binding.addChip.setOnClickListener {
             showAlertDialog()
@@ -55,9 +53,12 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
     }
 
     private fun isValid(): Boolean {
-        if (binding.addTitle.text.toString().isEmpty()) {
-            binding.titleFrame.boxStrokeColor = Color.RED
-            return false
+        with(binding) {
+            if (addTitle.text.toString().isEmpty()) {
+                titleFrame.boxStrokeColor = Color.RED
+                addTitle.requestFocus()
+                return false
+            }
         }
         return true
     }
@@ -74,20 +75,17 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
             val ingredientName = findViewById<TextInputEditText>(R.id.ingredient_name)
             val addButton = findViewById<AppCompatButton>(R.id.addIngredient)
             val cancelButton = findViewById<AppCompatButton>(R.id.cancelAdd)
-            //слушатель кнопки добавления нового ингредиента
-            //значение отправляется во вьюМодел, а потом срабатывает слушатель во фрагменте
-            //и элемент добавляется в chips group
             addButton.setOnClickListener {
                 val name = ingredientName.text.toString()
                 if (name.isNotEmpty()) {
                     viewModel.saveNewIngredient(name)
                     alertDialog.dismiss()
                 } else {
-                    customLayout.findViewById<TextInputLayout>(R.id.addTitleFrame).boxStrokeColor =
+                    findViewById<TextInputLayout>(R.id.addTitleFrame).boxStrokeColor =
                         Color.RED
+                    ingredientName.requestFocus()
                 }
             }
-            //слушатель кнопки отмены
             cancelButton.setOnClickListener {
                 alertDialog.dismiss()
             }
