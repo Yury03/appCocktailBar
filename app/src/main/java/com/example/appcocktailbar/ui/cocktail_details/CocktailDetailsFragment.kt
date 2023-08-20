@@ -1,20 +1,25 @@
 package com.example.appcocktailbar.ui.cocktail_details
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.appcocktailbar.R
 import com.example.appcocktailbar.databinding.FragmentCocktailDetailsBinding
 import com.example.appcocktailbar.domain.models.CocktailModel
 import com.example.appcocktailbar.ui.cocktail_details.adapters.IngredientListAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CocktailDetailsFragment : Fragment(R.layout.fragment_cocktail_details) {
 
     private lateinit var binding: FragmentCocktailDetailsBinding
+    private val viewModel by viewModel<CocktailDetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +50,23 @@ class CocktailDetailsFragment : Fragment(R.layout.fragment_cocktail_details) {
                 else getString(R.string.placeholder_details_recipe)
             detailsRecipeText.visibility = if (recipeExist) View.VISIBLE else View.GONE
             detailsIngredientList.adapter = adapter
+            detailsEdit.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putParcelable("cocktailModel", model)
+
+                }
+                findNavController().navigate(R.id.addCocktailFragment, bundle)
+            }
         }
+        model.photoPath?.let { setImage(it) }
+
+    }
+
+    private fun setImage(uri: String) {
+        Glide.with(requireContext())
+            .load(Uri.parse(uri))
+            .centerCrop()//todo???
+            .into(binding.detailsCamera)
     }
 
     private fun getCocktailModel(): CocktailModel =//TODO

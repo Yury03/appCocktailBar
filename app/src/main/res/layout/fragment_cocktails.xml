@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".ui.cocktails.CocktailsFragment">
 
@@ -52,6 +51,7 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
+        android:layout_marginHorizontal="4dp"
         tools:listitem="@layout/cocktail_item" />
 
 </LinearLayout>

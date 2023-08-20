@@ -45,7 +45,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         viewModel.cocktailsList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 with(binding) {
-                    cocktailsListRV.adapter = CocktailsListAdapter(it, showDetails)
+                    cocktailsListRV.adapter = CocktailsListAdapter(it, showDetails, requireContext())
                     placeholderArrow.visibility = View.GONE
                     placeholderHint.visibility = View.GONE
                     placeholderPhoto.visibility = View.GONE
