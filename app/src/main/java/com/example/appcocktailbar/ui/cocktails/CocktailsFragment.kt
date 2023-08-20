@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.appcocktailbar.R
 import com.example.appcocktailbar.databinding.FragmentCocktailsBinding
 import com.example.appcocktailbar.domain.models.CocktailModel
@@ -35,7 +35,12 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
     private fun initView() {
         val showDetails = { it: CocktailModel ->
-            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+
+            val bundle = Bundle().apply {
+                putParcelable("cocktailModel", it)
+            }
+
+            findNavController().navigate(R.id.cocktailDetailsFragment, bundle)
         }
         viewModel.cocktailsList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
@@ -46,9 +51,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
                     placeholderPhoto.visibility = View.GONE
                     cocktailsListRV.visibility = View.VISIBLE
                 }
-
             }
-
         }
     }
 

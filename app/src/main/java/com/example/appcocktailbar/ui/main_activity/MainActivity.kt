@@ -1,8 +1,14 @@
 package com.example.appcocktailbar.ui.main_activity
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.content.pm.PermissionInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.appcocktailbar.R
@@ -27,6 +33,10 @@ class MainActivity : AppCompatActivity() {
                 binding.floatingActionButton.visibility = View.GONE
             }
         }
+
+
+
+
     }
 
     private fun initView() {

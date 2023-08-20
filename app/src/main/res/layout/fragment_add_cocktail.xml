@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,24 +15,25 @@
         tools:context=".ui.add_cocktail.AddCocktailFragment">
 
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageBackgroundFrame"
+            android:layout_width="216dp"
+            android:layout_height="216dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="72dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/camera_background">
+            app:cardBackgroundColor="@color/image_background"
+            app:cardCornerRadius="48dp">
 
             <ImageView
                 android:id="@+id/camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@drawable/camera_background"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/camera_icon" />
-        </FrameLayout>
+                android:src="@drawable/camera_icon" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/titleFrame"

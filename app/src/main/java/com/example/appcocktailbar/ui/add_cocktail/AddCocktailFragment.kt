@@ -2,10 +2,13 @@ package com.example.appcocktailbar.ui.add_cocktail
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -19,9 +22,21 @@ import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
+class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
     private val viewModel by viewModel<AddCocktailViewModel>()
     private lateinit var binding: FragmentAddCocktailBinding
+    private var _uri: String? = null
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            _uri = uri.toString()
+            with(binding.camera) {
+                setImageURI(uri)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,34 +49,32 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.addSaveButton.setOnClickListener {
-            if (isValid()) {
-                viewModel.addCocktail(createModel())
-                findNavController().navigate(R.id.cocktailsFragment)
-            }
-        }
-        binding.addCancelButton.setOnClickListener {
-            findNavController().navigate(R.id.cocktailsFragment)
-        }
-        binding.addChip.setOnClickListener {
-            showAlertDialog()
-        }
+        initView()
         viewModel.newIngredientName.observe(viewLifecycleOwner) {
             addNewChip(it)
         }
     }
 
-    private fun isValid(): Boolean {
+    private fun initView() {
         with(binding) {
-            if (addTitle.text.toString().isEmpty()) {
-                titleFrame.boxStrokeColor = Color.RED
-                addTitle.requestFocus()
-                return false
+            addSaveButton.setOnClickListener {
+                if (isValid()) {
+                    viewModel.addCocktail(createModel())
+                    findNavController().navigate(R.id.cocktailsFragment)
+                }
+            }
+            addCancelButton.setOnClickListener {
+                findNavController().navigate(R.id.cocktailsFragment)
+            }
+            addChip.setOnClickListener {
+                showAlertDialog()
+            }
+            camera.setOnClickListener {
+                pickImageLauncher.launch("image/*")
             }
         }
-        return true
     }
+
 
     private fun showAlertDialog() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -99,17 +112,15 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
             val description = addDescription.editableText.toString()
             val recipe = addRecipe.editableText.toString()
             val id = System.currentTimeMillis()
-            return CocktailModel(id, title, description, getChipsText(), recipe, null)
+            return CocktailModel(id, title, description, getChipsText(), recipe, _uri)
         }
-
-
     }
 
     private fun getChipsText(): List<String> {
 
         val selectedChipTexts = mutableListOf<String>()
 
-        for (i in 0 until binding.chipGroup.childCount) {
+        for (i in 0 until binding.chipGroup.childCount - 1) {
             val chip = binding.chipGroup.getChildAt(i) as Chip
             val chipText = chip.text.toString()
             selectedChipTexts.add(chipText)
@@ -128,5 +139,15 @@ class AddCocktailFragment() : Fragment(R.layout.fragment_add_cocktail) {
         binding.chipGroup.addView(newChip, binding.chipGroup.childCount - 1)
     }
 
+    private fun isValid(): Boolean {
+        with(binding) {
+            if (addTitle.text.toString().isEmpty()) {
+                titleFrame.boxStrokeColor = Color.RED
+                addTitle.requestFocus()
+                return false
+            }
+        }
+        return true
+    }
 
 }

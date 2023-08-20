@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appcocktailbar.R
 import com.example.appcocktailbar.domain.models.CocktailModel
@@ -27,13 +28,15 @@ class CocktailsListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataItem = itemList[position]
-        holder.cocktailTitle.text = dataItem.name
-        holder.cocktailPhoto.setOnClickListener {//TODO
-            showDetails(dataItem)
+        with(holder) {
+            cocktailTitle.text = dataItem.name
+            cocktailPhoto.setOnClickListener {
+                showDetails(dataItem)
+            }
+            val path: String? = dataItem.photoPath
+            path?.let { cocktailPhoto.setImageURI(path.toUri()) }
         }
     }
 
     override fun getItemCount() = itemList.size
-
-
 }
