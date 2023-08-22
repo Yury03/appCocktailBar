@@ -29,7 +29,6 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
     private val viewModel by viewModel<AddCocktailViewModel>()
     private lateinit var binding: FragmentAddCocktailBinding
     private var _uri: String? = null
-
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -53,18 +52,18 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         /** если была получена модель, значит фрагмент запущен в режиме редактирования **/
         val editModel = getCocktailModel()
         editModel?.let {
             fillInputFields(it)
         }
-        initView(editModel)
+        initView(editModel?.id)
         viewModel.newIngredientName.observe(viewLifecycleOwner) {
             addNewChip(it)
         }
     }
 
+    /**Метод заполняет все поля ввода, если фрагмент открят в режиме редактирования*/
     private fun fillInputFields(model: CocktailModel) {
         val editableFactory = Editable.Factory.getInstance()
         val descriptionEditable = editableFactory.newEditable(model.description)
@@ -78,30 +77,29 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
                 Glide.with(requireContext())
                     .load(it)
                     .into(camera)
+                camera.scaleType = ImageView.ScaleType.CENTER_CROP
             }
             model.ingredients.forEach { ingredient -> addNewChip(ingredient) }
-
         }
     }
 
-    private fun initView(editModel: CocktailModel?) {
+    private fun initView(editModelID: Long?) {
         with(binding) {
             addSaveButton.setOnClickListener {
                 if (isValid()) {
-                    editModel?.let {
-                        viewModel.editCocktail(createModel())
-                    } ?: viewModel.addCocktail(createModel())
-                    findNavController().navigate(R.id.cocktailsFragment)
+                    val finishedModel = createModel(editModelID)
+                    editModelID?.let {
+                        viewModel.editCocktail(finishedModel)
+                        closeFragment(finishedModel)
+                    } ?: run {
+                        viewModel.addCocktail(finishedModel)
+                        closeFragment()
+                    }
                 }
             }
             addCancelButton.setOnClickListener {
-                editModel?.let {
-                    val bundle = Bundle().apply {
-                        putParcelable("cocktailModel", editModel)
-                    }
-                    findNavController().navigate(R.id.cocktailDetailsFragment, bundle)
-                } ?: findNavController().navigate(R.id.cocktailsFragment)
-
+                editModelID?.let { closeFragment(createModel(editModelID)) }
+                    ?: run { closeFragment() }
             }
             addChip.setOnClickListener {
                 showAlertDialog()
@@ -112,6 +110,16 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
         }
     }
 
+    /** в случае редактирования происходит закрытие фрагмента с передачей редактируемой модели на
+     * фрагмент CocktailDetailsFragment*/
+    private fun closeFragment(model: CocktailModel? = null) {
+        model?.let {
+            val bundle = Bundle().apply {
+                putParcelable("cocktailModel", model)
+            }
+            findNavController().navigate(R.id.cocktailDetailsFragment, bundle)
+        } ?: findNavController().navigate(R.id.cocktailsFragment)
+    }
 
     private fun showAlertDialog() {
         val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -143,16 +151,17 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
         alertDialog.show()
     }
 
-    private fun createModel(): CocktailModel {
+    private fun createModel(editID: Long? = null): CocktailModel {
         with(binding) {
             val title = addTitle.editableText.toString()
             val description = addDescription.editableText.toString()
             val recipe = addRecipe.editableText.toString()
-            val id = System.currentTimeMillis()//todo
+            val id = editID ?: System.currentTimeMillis()
             return CocktailModel(id, title, description, getChipsText(), recipe, _uri)
         }
     }
 
+    /** Метод обходит все chips и возвращает List<String>, который является списком ингредиентов*/
     private fun getChipsText(): List<String> {
         val selectedChipTexts = mutableListOf<String>()
         for (i in 0 until binding.chipGroup.childCount - 1) {
@@ -164,6 +173,7 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
 
     }
 
+    /**Добавление нового ингредиента*/
     private fun addNewChip(text: String) {
         val newChip = Chip(binding.chipGroup.context)
         newChip.text = text
@@ -185,6 +195,7 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
         return true
     }
 
+    /**Получение модели из аргументов фрагмента*/
     private fun getCocktailModel(): CocktailModel? =//TODO
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             arguments?.getParcelable("cocktailModel", CocktailModel::class.java)

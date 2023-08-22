@@ -23,33 +23,39 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCocktailsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
-
     }
+
 
     private fun initView() {
         val showDetails = { it: CocktailModel ->
-
             val bundle = Bundle().apply {
                 putParcelable("cocktailModel", it)
             }
-
             findNavController().navigate(R.id.cocktailDetailsFragment, bundle)
         }
         viewModel.cocktailsList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 with(binding) {
-                    cocktailsListRV.adapter = CocktailsListAdapter(it, showDetails, requireContext())
+                    cocktailsListRV.adapter =
+                        CocktailsListAdapter(it, showDetails, requireContext())
                     placeholderArrow.visibility = View.GONE
                     placeholderHint.visibility = View.GONE
                     placeholderPhoto.visibility = View.GONE
                     cocktailsListRV.visibility = View.VISIBLE
+                }
+            } else {
+                with(binding) {
+                    placeholderArrow.visibility = View.VISIBLE
+                    placeholderHint.visibility = View.VISIBLE
+                    placeholderPhoto.visibility = View.VISIBLE
+                    cocktailsListRV.visibility = View.GONE
                 }
             }
         }

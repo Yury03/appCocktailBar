@@ -20,12 +20,14 @@ class CocktailDetailsFragment : Fragment(R.layout.fragment_cocktail_details) {
 
     private lateinit var binding: FragmentCocktailDetailsBinding
     private val viewModel by viewModel<CocktailDetailsViewModel>()
+    
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCocktailDetailsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -53,9 +55,15 @@ class CocktailDetailsFragment : Fragment(R.layout.fragment_cocktail_details) {
             detailsEdit.setOnClickListener {
                 val bundle = Bundle().apply {
                     putParcelable("cocktailModel", model)
-
                 }
                 findNavController().navigate(R.id.addCocktailFragment, bundle)
+            }
+            detailsRemove.setOnClickListener {
+                viewModel.removeCocktail(model.id)
+                closeFragment()
+            }
+            backButton.setOnClickListener{
+                closeFragment()
             }
         }
         model.photoPath?.let { setImage(it) }
@@ -67,6 +75,10 @@ class CocktailDetailsFragment : Fragment(R.layout.fragment_cocktail_details) {
             .load(Uri.parse(uri))
             .centerCrop()//todo???
             .into(binding.detailsCamera)
+    }
+
+    private fun closeFragment() {
+        findNavController().navigate(R.id.cocktailsFragment)
     }
 
     private fun getCocktailModel(): CocktailModel =//TODO

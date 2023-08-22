@@ -7,7 +7,7 @@ import com.example.appcocktailbar.data.room.mappers.CocktailMapper
 import com.example.appcocktailbar.domain.Repository
 import com.example.appcocktailbar.domain.models.CocktailModel
 
-class AddCocktailsContractImpl(private val context: Context) :
+class AddCocktailsContractImpl(context: Context) :
     Repository.AddCocktailFragmentContract {
 
     private val database: CocktailDatabase by lazy {

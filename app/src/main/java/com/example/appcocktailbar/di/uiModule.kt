@@ -24,6 +24,8 @@ val uiModule = module {
         )
     }
     viewModel<CocktailDetailsViewModel> {
-        CocktailDetailsViewModel()
+        CocktailDetailsViewModel(
+            deleteCocktail = get(),
+        )
     }
 }
