@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.appcocktailbar.data.room.dao.CocktailsDatabaseDao
 import com.example.appcocktailbar.data.room.entity.CocktailEntity
 
 
 @Database(entities = [CocktailEntity::class], version = 1)
+@TypeConverters(CocktailEntity.ConverterList::class)
 abstract class CocktailDatabase : RoomDatabase() {
     abstract fun cocktailsDao(): CocktailsDatabaseDao
 

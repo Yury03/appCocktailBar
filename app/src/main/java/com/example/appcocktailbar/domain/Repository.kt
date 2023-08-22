@@ -12,4 +12,8 @@ interface Repository {
         fun addCocktail(cocktail: CocktailModel)
         fun editCocktail(cocktail: CocktailModel)
     }
+
+    interface DetailsFragmentContract {
+        fun deleteCocktail(id: Long)
+    }
 }

@@ -10,7 +10,7 @@ object CocktailMapper {
         description = entity.description,
         ingredients = entity.ingredients,
         recipe = entity.recipe,
-        photoPath = null,
+        photoPath = entity.photoPath,
     )
 
     fun modelToEntity(model: CocktailModel) = CocktailEntity(
@@ -19,6 +19,6 @@ object CocktailMapper {
         description = model.description,
         ingredients = model.ingredients,
         recipe = model.recipe,
-        photoPath = null,
+        photoPath = model.photoPath,
     )
 }

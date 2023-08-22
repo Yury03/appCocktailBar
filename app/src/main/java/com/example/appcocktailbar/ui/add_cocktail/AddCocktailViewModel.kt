@@ -20,10 +20,9 @@ class AddCocktailViewModel(
     val newIngredientName: LiveData<String> get() = _newIngredientName
     fun addCocktail(model: CocktailModel) =
         viewModelScope.launch(Dispatchers.IO) { addCocktail.invoke(model) }
-
     fun editCocktail(model: CocktailModel) =
         viewModelScope.launch(Dispatchers.IO) { editCocktail.invoke(model) }
 
-    fun saveNewIngredient(name: String) = _newIngredientName.postValue(name)
 
+    fun saveNewIngredient(name: String) = _newIngredientName.postValue(name)
 }
