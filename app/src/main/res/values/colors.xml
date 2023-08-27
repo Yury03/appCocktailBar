@@ -10,6 +10,7 @@
     <color name="button_add_background">#4B97FF</color>
     <color name="main_text_color">#FF313131</color>
     <color name="image_background">#FFEEEEEE</color>
+    <color name="stroke_chip">#FFCAC4D0</color>
 
 
 </resources>
