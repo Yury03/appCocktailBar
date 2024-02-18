@@ -20,5 +20,6 @@
     <string name="tire">-</string>
     <string name="placeholder_ingredient_item">9 cups water</string>
     <string name="placeholder_details_recipe">ice as needed</string>
+    <string name="plus">+</string>
 
 </resources>
