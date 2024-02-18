@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -63,7 +64,7 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
         }
     }
 
-    /**Метод заполняет все поля ввода, если фрагмент открят в режиме редактирования*/
+    /**Метод заполняет все поля ввода, если фрагмент открыт в режиме редактирования*/
     private fun fillInputFields(model: CocktailModel) {
         val editableFactory = Editable.Factory.getInstance()
         val descriptionEditable = editableFactory.newEditable(model.description)
@@ -173,13 +174,24 @@ class AddCocktailFragment : Fragment(R.layout.fragment_add_cocktail) {
 
     }
 
-    /**Добавление нового ингредиента*/
-    private fun addNewChip(text: String) {
+    /**Параметры для добавление нового Chip*/
+    private fun addNewChip(chipText: String) {
         val newChip = Chip(binding.chipGroup.context)
-        newChip.text = text
-        newChip.isCloseIconVisible = true
-        newChip.setOnCloseIconClickListener {
-            binding.chipGroup.removeView(newChip)
+        newChip.apply {
+            text = chipText
+            closeIcon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.remove_chip_icon)
+            isCloseIconVisible = true
+            closeIconTint =
+                ContextCompat.getColorStateList(requireContext(), R.color.button_add_background)
+            chipStrokeWidth = 4f
+            chipBackgroundColor =
+                ContextCompat.getColorStateList(requireContext(), android.R.color.transparent)
+            chipStrokeColor =
+                ContextCompat.getColorStateList(requireContext(), R.color.stroke_chip)
+            setOnCloseIconClickListener {
+                binding.chipGroup.removeView(newChip)
+            }
         }
         binding.chipGroup.addView(newChip, binding.chipGroup.childCount - 1)
     }
